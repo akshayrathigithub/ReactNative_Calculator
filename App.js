@@ -2,14 +2,26 @@ import React, { useState } from "react"
 import { StyleSheet, Text, View, TouchableOpacity } from "react-native"
 
 export default function App() {
-  const [state, setState] = useState(0)
+  const [input, setInput] = useState("")
+  const [result, setResult] = useState(0)
+  const [flag, setFlag] = useState(false)
   const Clicked = (type) => {
-    setState(type)
+    let text = input
+    if (type === "AC") {
+      text = ""
+    } else if (type === "C") {
+      if (text.length >= 1) text = text.substr(0, text.length - 1)
+    } else if (type === "/" || type === "X" || type === "-" || type === "+") {
+      setFlag(!setFlag)
+    } else {
+      text = input + "" + type
+    }
+    setInput(text)
   }
   return (
     <View style={styles.container}>
       <View style={styles.output}>
-        <Text style={styles.outputText}>{state}</Text>
+        <Text style={styles.outputText}>{input}</Text>
       </View>
       <View style={styles.btnGroup}>
         <TouchableOpacity style={styles.btn} onPress={() => Clicked("AC")}>

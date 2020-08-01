@@ -17,17 +17,22 @@ export default function App() {
       text.flag = "Not"
     } else if (type === "C") {
       if (text.input.length >= 1) text.input = text.input.substr(0, text.input.length - 1)
-    } else if (type === "/" || type === "X" || type === "-" || type === "+" || type === "=") {
+    } else if (
+      text.input.length >= 1 &&
+      (type === "/" || type === "X" || type === "-" || type === "+" || type === "=")
+    ) {
       if (text.flag === "Not") {
         if (type === "=") {
           null
         } else {
           text.flag = "Yes"
+          text.input = text.input + "" + type
         }
-        text.input = text.input + "" + type
       } else if (text.flag === "Yes") {
         console.log(text.factor)
-        const [first, second] = text.input.split(text.factor)
+        let [first, second] = text.input.split(text.factor)
+        first = parseFloat(first)
+        second = parseFloat(second)
         switch (text.factor) {
           case "/": {
             text.result = first / second
@@ -50,12 +55,16 @@ export default function App() {
             text.flag = "Not"
         }
         if (type === "=") {
-          text.input = text.result
+          text.input = text.result + ""
         } else {
           text.input = text.result + "" + type
         }
       }
-      text.factor = type
+      if (type === "=") {
+        text.factor = ""
+      } else {
+        text.factor = type
+      }
     } else {
       text.input = text.input + "" + type
     }
@@ -64,7 +73,7 @@ export default function App() {
   return (
     <View style={styles.container}>
       <View style={styles.output}>
-        {console.log("Called")}
+        {console.log(state)}
         <Text style={styles.outputText}>{state.input}</Text>
       </View>
       <View style={styles.btnGroup}>
@@ -74,7 +83,7 @@ export default function App() {
         <TouchableOpacity style={styles.btn} onPress={() => Clicked("C")}>
           <Text style={styles.text}>C</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.btn} onPress={() => Clicked("%")}>
+        <TouchableOpacity style={styles.btn}>
           <Text style={styles.text}>%</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.btn} onPress={() => Clicked("/")}>

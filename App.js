@@ -2,26 +2,70 @@ import React, { useState } from "react"
 import { StyleSheet, Text, View, TouchableOpacity } from "react-native"
 
 export default function App() {
-  const [input, setInput] = useState("")
-  const [result, setResult] = useState(0)
-  const [flag, setFlag] = useState(false)
+  const [state, setState] = useState({
+    input: "",
+    factor: "",
+    result: 0,
+    flag: "Not",
+  })
   const Clicked = (type) => {
-    let text = input
+    let text = { ...state }
     if (type === "AC") {
-      text = ""
+      text.input = ""
+      text.factor = ""
+      text.result = 0
+      text.flag = "Not"
     } else if (type === "C") {
-      if (text.length >= 1) text = text.substr(0, text.length - 1)
-    } else if (type === "/" || type === "X" || type === "-" || type === "+") {
-      setFlag(!setFlag)
+      if (text.input.length >= 1) text.input = text.input.substr(0, text.input.length - 1)
+    } else if (type === "/" || type === "X" || type === "-" || type === "+" || type === "=") {
+      if (text.flag === "Not") {
+        if (type === "=") {
+          null
+        } else {
+          text.flag = "Yes"
+        }
+        text.input = text.input + "" + type
+      } else if (text.flag === "Yes") {
+        console.log(text.factor)
+        const [first, second] = text.input.split(text.factor)
+        switch (text.factor) {
+          case "/": {
+            text.result = first / second
+            break
+          }
+          case "-": {
+            text.result = first - second
+            break
+          }
+          case "+": {
+            text.result = parseFloat(first) + parseFloat(second)
+            break
+          }
+          case "X": {
+            text.result = first * second
+            break
+          }
+          default:
+            // null
+            text.flag = "Not"
+        }
+        if (type === "=") {
+          text.input = text.result
+        } else {
+          text.input = text.result + "" + type
+        }
+      }
+      text.factor = type
     } else {
-      text = input + "" + type
+      text.input = text.input + "" + type
     }
-    setInput(text)
+    setState(text)
   }
   return (
     <View style={styles.container}>
       <View style={styles.output}>
-        <Text style={styles.outputText}>{input}</Text>
+        {console.log("Called")}
+        <Text style={styles.outputText}>{state.input}</Text>
       </View>
       <View style={styles.btnGroup}>
         <TouchableOpacity style={styles.btn} onPress={() => Clicked("AC")}>

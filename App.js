@@ -1,71 +1,74 @@
-import { StatusBar } from "expo-status-bar"
-import React from "react"
-import { StyleSheet, Text, View } from "react-native"
+import React, { useState } from "react"
+import { StyleSheet, Text, View, TouchableOpacity } from "react-native"
 
 export default function App() {
+  const [state, setState] = useState(0)
+  const Clicked = (type) => {
+    setState(type)
+  }
   return (
     <View style={styles.container}>
       <View style={styles.output}>
-        <Text style={styles.outputText}>0</Text>
+        <Text style={styles.outputText}>{state}</Text>
       </View>
       <View style={styles.btnGroup}>
-        <View style={styles.btn}>
+        <TouchableOpacity style={styles.btn} onPress={() => Clicked("AC")}>
           <Text style={styles.text}>AC</Text>
-        </View>
-        <View style={styles.btn}>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.btn} onPress={() => Clicked("C")}>
           <Text style={styles.text}>C</Text>
-        </View>
-        <View style={styles.btn}>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.btn} onPress={() => Clicked("%")}>
           <Text style={styles.text}>%</Text>
-        </View>
-        <View style={styles.btn}>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.btn} onPress={() => Clicked("/")}>
           <Text style={styles.text}>/</Text>
-        </View>
-        <View style={styles.btn}>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.btn} onPress={() => Clicked("7")}>
           <Text style={styles.text}>7</Text>
-        </View>
-        <View style={styles.btn}>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.btn} onPress={() => Clicked("8")}>
           <Text style={styles.text}>8</Text>
-        </View>
-        <View style={styles.btn}>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.btn} onPress={() => Clicked("9")}>
           <Text style={styles.text}>9</Text>
-        </View>
-        <View style={styles.btn}>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.btn} onPress={() => Clicked("X")}>
           <Text style={styles.text}>X</Text>
-        </View>
-        <View style={styles.btn}>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.btn} onPress={() => Clicked("4")}>
           <Text style={styles.text}>4</Text>
-        </View>
-        <View style={styles.btn}>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.btn} onPress={() => Clicked("5")}>
           <Text style={styles.text}>5</Text>
-        </View>
-        <View style={styles.btn}>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.btn} onPress={() => Clicked("6")}>
           <Text style={styles.text}>6</Text>
-        </View>
-        <View style={styles.btn}>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.btn} onPress={() => Clicked("-")}>
           <Text style={styles.text}>-</Text>
-        </View>
-        <View style={styles.btn}>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.btn} onPress={() => Clicked("1")}>
           <Text style={styles.text}>1</Text>
-        </View>
-        <View style={styles.btn}>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.btn} onPress={() => Clicked("2")}>
           <Text style={styles.text}>2</Text>
-        </View>
-        <View style={styles.btn}>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.btn} onPress={() => Clicked("3")}>
           <Text style={styles.text}>3</Text>
-        </View>
-        <View style={styles.btn}>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.btn} onPress={() => Clicked("+")}>
           <Text style={styles.text}>+</Text>
-        </View>
-        <View style={styles.zeroBtn}>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.zeroBtn} onPress={() => Clicked("0")}>
           <Text style={styles.text}>0</Text>
-        </View>
-        <View style={styles.btn}>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.btn} onPress={() => Clicked(".")}>
           <Text style={styles.text}>.</Text>
-        </View>
-        <View style={styles.btn}>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.btn} onPress={() => Clicked("=")}>
           <Text style={styles.text}>=</Text>
-        </View>
+        </TouchableOpacity>
       </View>
     </View>
   )

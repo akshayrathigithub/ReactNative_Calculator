@@ -36,19 +36,19 @@ export default function App() {
             second = parseFloat(second)
             switch (text.factor) {
               case "/": {
-                text.input = first / second + ""
+                text.input = (first / second).toFixed(2) + ""
                 break
               }
               case "-": {
-                text.input = first - second + ""
+                text.input = (first - second).toFixed(2) + ""
                 break
               }
               case "+": {
-                text.input = first + second + ""
+                text.input = (first + second).toFixed(2) + ""
                 break
               }
               case "X": {
-                text.input = first * second + ""
+                text.input = (first * second).toFixed(2) + ""
                 break
               }
               default:

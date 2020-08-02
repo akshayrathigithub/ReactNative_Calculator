@@ -5,65 +5,64 @@ export default function App() {
   const [state, setState] = useState({
     input: "",
     factor: "",
-    result: 0,
-    flag: "Not",
+    flag: "Off",
   })
   const Clicked = (type) => {
     let text = { ...state }
     if (type === "AC") {
       text.input = ""
       text.factor = ""
-      text.result = 0
-      text.flag = "Not"
+      text.flag = "Off"
     } else if (type === "C") {
-      if (text.input.length >= 1) text.input = text.input.substr(0, text.input.length - 1)
-    } else if (
-      text.input.length >= 1 &&
-      (type === "/" || type === "X" || type === "-" || type === "+" || type === "=")
-    ) {
-      if (text.flag === "Not") {
-        if (type === "=") {
-          null
-        } else {
-          text.flag = "Yes"
-          text.input = text.input + "" + type
+      if (text.input.length >= 1) {
+        const lastDigit = text.input[text.input.length - 1]
+        if (lastDigit === "/" || lastDigit === "X" || lastDigit === "-" || lastDigit === "+") {
+          text.flag = "Off"
         }
-      } else if (text.flag === "Yes") {
-        console.log(text.factor)
-        let [first, second] = text.input.split(text.factor)
-        first = parseFloat(first)
-        second = parseFloat(second)
-        switch (text.factor) {
-          case "/": {
-            text.result = first / second
-            break
-          }
-          case "-": {
-            text.result = first - second
-            break
-          }
-          case "+": {
-            text.result = parseFloat(first) + parseFloat(second)
-            break
-          }
-          case "X": {
-            text.result = first * second
-            break
-          }
-          default:
-            // null
-            text.flag = "Not"
-        }
-        if (type === "=") {
-          text.input = text.result + ""
-        } else {
-          text.input = text.result + "" + type
-        }
+        text.input = text.input.substr(0, text.input.length - 1)
       }
-      if (type === "=") {
-        text.factor = ""
+    } else if (type === "/" || type === "X" || type === "-" || type === "+" || type === "=") {
+      if (text.input.length === 0) {
+        // null
       } else {
-        text.factor = type
+        console.log(text.input[text.input.length - 1])
+        const lastDigit = text.input[text.input.length - 1]
+        if (lastDigit === "/" || lastDigit === "X" || lastDigit === "-" || lastDigit === "+") {
+          // null
+        } else {
+          if (text.flag === "On") {
+            let [first, second] = text.input.split(text.factor)
+            first = parseFloat(first)
+            second = parseFloat(second)
+            switch (text.factor) {
+              case "/": {
+                text.input = first / second + ""
+                break
+              }
+              case "-": {
+                text.input = first - second + ""
+                break
+              }
+              case "+": {
+                text.input = first + second + ""
+                break
+              }
+              case "X": {
+                text.input = first * second + ""
+                break
+              }
+              default:
+                null
+            }
+          }
+          if (type === "=") {
+            text.input = text.input + ""
+          } else {
+            text.input = text.input + "" + type
+          }
+          text.flag = "On"
+          text.factor = type
+        }
       }
     } else {
       text.input = text.input + "" + type
@@ -73,7 +72,6 @@ export default function App() {
   return (
     <View style={styles.container}>
       <View style={styles.output}>
-        {console.log(state)}
         <Text style={styles.outputText}>{state.input}</Text>
       </View>
       <View style={styles.btnGroup}>
